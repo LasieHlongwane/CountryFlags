@@ -59,11 +59,6 @@ jobs:
         run: |
              ls -al  # List the files in the current directory
 
-      - name: Install dependencies (frontend)
-        run: |
-            cd flagfrontend 
-            npm install  
-          
       - name: Install dependencies
         working-directory: ./flagfrontend
         run: npm install
