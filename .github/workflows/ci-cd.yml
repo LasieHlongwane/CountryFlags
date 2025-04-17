@@ -27,15 +27,15 @@ jobs:
         run: |
              python -m pip install --upgrade pip
              pip install -r requirements.txt
-        working-directory: ./main
+        working-directory: ./main/main
 
       - name: Run backend tests
         run: python manage.py test
-        working-directory: ./main
+        working-directory: ./main/main
 
       - name: Collect static files
         run: python manage.py collectstatic --noinput
-        working-directory: ./main
+        working-directory: ./main/main
 
 
   ### === FRONTEND (React) === ###
