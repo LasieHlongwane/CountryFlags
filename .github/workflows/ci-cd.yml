@@ -55,7 +55,7 @@ jobs:
         with:
          node-version: '14' 
         
-      - name: Debug frontend folder
+      - name: Debug flagfrontend folder
         run: |
          ls -al flagfrontend  # List the contents of the frontend directory
    
