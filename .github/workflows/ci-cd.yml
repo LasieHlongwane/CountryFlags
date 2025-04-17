@@ -61,8 +61,8 @@ jobs:
 
       - name: Install dependencies (frontend)
         run: |
-            cd ./flagfrontend  # Change directory to the frontend folder
-            npm install  # Install the frontend dependencies
+            cd flagfrontend 
+            npm install  
           
       - name: Install dependencies
         working-directory: ./flagfrontend
