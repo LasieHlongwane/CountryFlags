@@ -29,9 +29,10 @@ jobs:
          pip install -r requirements.txt
         working-directory: ./main/main
 
-
-      - name: Run Django Tests
+      - name: Run backend tests
         run: python manage.py test
+        working-directory: ./main
+
 
       - name: Collect Static Files
         run: python manage.py collectstatic --noinput
