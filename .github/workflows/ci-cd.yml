@@ -55,9 +55,13 @@ jobs:
         with:
          node-version: '14' 
 
+      - name: Debug folder structure
+        run: |
+             ls -al  # List the files in the current directory
+
       - name: Install dependencies (frontend)
         run: |
-            cd countries/flagfrontend  # Change directory to the frontend folder
+            cd ./flagfrontend  # Change directory to the frontend folder
             npm install  # Install the frontend dependencies
           
       - name: Install dependencies
