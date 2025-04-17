@@ -54,12 +54,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
          node-version: '14' 
-        
-      - name: Debug flagfrontend folder
-        run: |
-         ls -al flagfrontend  # List the contents of the frontend directory
-   
-
 
       - name: Install dependencies (frontend)
         run: |
