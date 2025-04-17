@@ -1,0 +1,44 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches:
+      - main  # Trigger pipeline on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger pipeline on PR to the main branch
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu environment
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Checkout the repository code
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'  # Use Python 3.9 for the backend
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv  # Create virtual environment
+        . venv/bin/activate  # Activate the virtual environment
+        pip install -r requirements.txt  # Install backend dependencies
+
+    - name: Run database migrations
+      run: |
+        . venv/bin/activate  # Activate virtual environment
+        python manage.py migrate  # Apply Django migrations
+
+    - name: Run Backend Tests
+      run: |
+        . venv/bin/activate  # Activate virtual environment
+        pytest backend/tests/ --maxfail=1 --disable-warnings -q  # Run backend tests using pytest
+
+    - name: Build Docker Image (Optional)
+      run: |
+        docker build -t backend-app .  # Build Docker image
+        docker tag backend-app yourdockerhubusername/backend-app:latest  # Tag the image
+        docker push yourdockerhubusername/backend-app:latest  # Push Docker image to registry (Optional)

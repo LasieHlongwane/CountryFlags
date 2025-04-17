@@ -1,0 +1,82 @@
+
+name: Fullstack CI/CD Pipeline
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ### === BACKEND (Django) === ###
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flagbackend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Django Tests
+        run: python manage.py test
+
+      - name: Collect Static Files
+        run: python manage.py collectstatic --noinput
+
+  ### === FRONTEND (React) === ###
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flagfrontend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run React Tests
+        run: npm test -- --watchAll=false
+
+      - name: Build React App
+        run: npm run build
+
+  ### === PACKAGE BOTH === ###
+  package:
+    runs-on: ubuntu-latest
+    needs: [frontend, backend]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Create Package Folder
+        run: |
+          mkdir dist
+          cp -r flagfrontend/build dist/frontend
+          cp -r flagbackend dist/backend
+          echo "Packaging complete."
+
+      - name: Upload Deployment Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: fullstack-app
+          path: dist
