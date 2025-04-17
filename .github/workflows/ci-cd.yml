@@ -31,11 +31,11 @@ jobs:
 
       - name: Run backend tests
         run: python manage.py test
-        working-directory: ./main/main
+        working-directory: ./main
 
       - name: Collect static files
         run: python manage.py collectstatic --noinput
-        working-directory: ./main/main
+        working-directory: ./main
 
 
   ### === FRONTEND (React) === ###
