@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: flagfrontend
+        working-directory: ./main
 
     steps:
       - name: Checkout Code
