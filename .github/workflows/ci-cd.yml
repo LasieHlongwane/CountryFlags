@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./main/main
+        working-directory: ./flagfrontend
 
     steps:
       - name: Checkout Code
@@ -54,8 +54,14 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Dependencies
+      - name: Install dependencies
+        working-directory: ./flagfrontend
         run: npm install
+       
+      - name: Run Frontend Tests
+        working-directory: ./flagfrontend
+        run: npm test -- --watchAll=false
+
 
       - name: Run React Tests
         run: npm test -- --watchAll=false
